@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fc">
+  <meta name="description" content="Gyamfi Learning Hub helps learners explore curricula, study lessons, build learning streaks and discover career pathways.">
+  <title>Gyamfi Learning Hub — Learn with purpose</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="Gyamfi Learning Hub home">
+        <span class="brand-mark">G<span>+</span></span>
+        <span class="brand-copy"><strong>Gyamfi</strong><small>LEARNING HUB</small></span>
+      </a>
+      <div class="side-label">LEARN</div>
+      <nav class="side-nav" aria-label="Main navigation">
+        <a class="nav-link active" href="#dashboard" data-view="dashboard"><span>▦</span> Dashboard</a>
+        <a class="nav-link" href="#courses" data-view="courses"><span>▤</span> My learning</a>
+        <a class="nav-link" href="#subjects" data-view="subjects"><span>◈</span> Subjects</a>
+        <a class="nav-link" href="#videos" data-view="videos"><span>▷</span> Video library <span class="nav-pill">NEW</span></a>
+      </nav>
+      <div class="side-label side-label-spaced">GROW</div>
+      <nav class="side-nav" aria-label="Growth navigation">
+        <a class="nav-link" href="#ai-tutor" data-view="ai-tutor"><span>✳</span> AI study buddy</a>
+        <a class="nav-link" href="#careers" data-view="careers"><span>⌁</span> Career pathways</a>
+        <a class="nav-link" href="#streaks" data-view="streaks"><span>♨</span> My streaks</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card"><span class="help-icon">✦</span><strong>Keep growing.</strong><p>Small steps every day lead to big results.</p><a href="#courses" data-view="courses">Continue learning ↗</a></div>
+        <div class="profile-row"><div class="avatar">GL</div><div><strong>Learner</strong><small>My learning space</small></div><span class="profile-dots">···</span></div>
+      </div>
+    </aside>
+
+    <main class="main-area" id="dashboard">
+      <header class="topbar">
+        <button class="icon-button mobile-menu" id="menu-toggle" aria-label="Open menu">☰</button>
+        <div class="breadcrumb">Learning space <span>/</span> <strong id="breadcrumb-current">Dashboard</strong></div>
+        <div class="top-actions">
+          <label class="country-select"><span>🌍</span><select id="country-select" aria-label="Choose curriculum country"><option value="Ghana">Ghana curriculum</option><option value="Nigeria">Nigeria curriculum</option><option value="United Kingdom">United Kingdom curriculum</option><option value="United States">United States curriculum</option><option value="South Africa">South Africa curriculum</option></select></label>
+          <button class="icon-button notification-button" aria-label="Notifications" title="Notifications">♧<i></i></button>
+          <div class="avatar top-avatar">GL</div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <section class="welcome-row">
+          <div><p class="eyebrow" id="today-label">YOUR LEARNING SPACE</p><h1 id="welcome-title">Keep that curiosity going <span>✦</span></h1><p class="muted" id="welcome-subtitle">A little progress today makes a big difference tomorrow.</p></div>
+          <div class="date-chip"><span>▦</span><span id="date-label">Your learning journey</span></div>
+        </section>
+
+        <section class="hero-card">
+          <div class="hero-content"><span class="hero-kicker"><span class="spark">✦</span> YOUR NEXT CHAPTER STARTS HERE</span><h2>Learn something<br>that changes <em>everything.</em></h2><p>Build knowledge, find your rhythm, and move closer to the future you imagine.</p><a class="primary-button" href="#courses" data-view="courses">Explore your learning <span>→</span></a></div>
+          <div class="hero-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="book book-back"></div><div class="book book-front"><div class="book-line"></div><div class="book-line short"></div><div class="book-line"></div><div class="book-line short"></div></div><div class="art-star star-a">✦</div><div class="art-star star-b">✧</div><div class="art-dot"></div><div class="art-caption">GROW<br>EVERY DAY</div></div>
+        </section>
+
+        <section class="stats-grid" aria-label="Learning statistics">
+          <article class="stat-card"><div class="stat-icon purple">◷</div><div class="stat-label">Study time this week</div><div class="stat-value"><span id="study-minutes">0</span> <small>mins</small></div><div class="stat-foot"><span class="foot-dot purple-dot"></span>Tracked on this device</div></article>
+          <article class="stat-card"><div class="stat-icon orange">♨</div><div class="stat-label">Current streak</div><div class="stat-value"><span id="streak-count">0</span> <small>days</small></div><div class="stat-foot"><span class="foot-dot orange-dot"></span>Start a study session today</div></article>
+          <article class="stat-card"><div class="stat-icon green">✓</div><div class="stat-label">Lessons completed</div><div class="stat-value"><span id="lesson-count">0</span> <small>lessons</small></div><div class="stat-foot"><span class="foot-dot green-dot"></span>Every lesson counts</div></article>
+          <article class="stat-card"><div class="stat-icon blue">◎</div><div class="stat-label">Daily study goal</div><div class="stat-value"><span id="goal-percent">0</span><small>%</small></div><div class="progress-track"><span id="goal-progress"></span></div></article>
+        </section>
+
+        <section class="content-grid">
+          <div class="content-main">
+            <div class="section-heading"><div><p class="eyebrow">PICK UP WHERE YOU LEFT OFF</p><h2 id="courses-heading">Explore your learning</h2></div><a class="text-link" href="#courses" data-view="courses">View all <span>→</span></a></div>
+            <div class="course-grid" id="course-grid">
+              <article class="course-card"><div class="course-cover cover-chem"><span class="cover-symbol">⚗</span><span class="cover-tag">SCIENCE</span></div><div class="course-body"><div class="course-meta"><span>SHS 3 · Ghana</span><span class="course-status">START HERE</span></div><h3>Chemistry</h3><p>Build strong foundations and prepare for WASSCE.</p><div class="course-bottom"><span class="course-lessons">Topic-based learning</span><button class="round-arrow course-open" data-course="Chemistry" aria-label="Open Chemistry">↗</button></div></div></article>
+              <article class="course-card"><div class="course-cover cover-bio"><span class="cover-symbol">⌘</span><span class="cover-tag">LIFE SCIENCE</span></div><div class="course-body"><div class="course-meta"><span>SHS · Ghana</span><span class="course-status">EXPLORE</span></div><h3>Biology</h3><p>Understand living things, systems and the world around you.</p><div class="course-bottom"><span class="course-lessons">Topic-based learning</span><button class="round-arrow course-open" data-course="Biology" aria-label="Open Biology">↗</button></div></div></article>
+              <article class="course-card"><div class="course-cover cover-math"><span class="cover-symbol">∑</span><span class="cover-tag">MATHEMATICS</span></div><div class="course-body"><div class="course-meta"><span>SHS · Ghana</span><span class="course-status">EXPLORE</span></div><h3>Core Mathematics</h3><p>Practise problem-solving one clear step at a time.</p><div class="course-bottom"><span class="course-lessons">Topic-based learning</span><button class="round-arrow course-open" data-course="Core Mathematics" aria-label="Open Core Mathematics">↗</button></div></div></article>
+            </div>
+            <div class="section-heading second-heading"><div><p class="eyebrow">MAKE LEARNING A HABIT</p><h2>Your weekly rhythm</h2></div></div>
+            <div class="week-card"><div class="week-copy"><div class="week-icon">✦</div><div><strong>Show up for your future.</strong><p>Record a study session to build your streak and track your weekly effort.</p></div></div><div class="week-days" id="week-days" aria-label="Study activity this week"></div><button class="secondary-button" id="study-session">＋ Log 15-minute session</button></div>
+          </div>
+
+          <aside class="content-aside">
+            <div class="aside-heading"><div><p class="eyebrow">YOUR MOMENTUM</p><h2>Study streak</h2></div><span class="flame">♨</span></div>
+            <div class="streak-card"><div class="streak-number"><span id="aside-streak">0</span><small>day streak</small></div><p>Consistency beats cramming. Come back and learn a little each day.</p><div class="streak-week" id="streak-week"></div><div class="streak-footer"><span>Weekly activity</span><strong id="active-days">0 / 7 days</strong></div></div>
+            <div class="career-card"><div class="career-graphic"><span>✧</span><div class="career-orbit"></div></div><p class="eyebrow">THINK ABOUT TOMORROW</p><h3>Your future has options.</h3><p>Discover careers, skills and subjects that can help you get there.</p><a class="text-link" href="#careers" data-view="careers">Explore career paths <span>→</span></a></div>
+            <div class="source-note"><span>ⓘ</span><p><strong>Curriculum transparency</strong><br>Official syllabus links and verified lesson coverage will be labelled as they are added.</p></div>
+          </aside>
+        </section>
+        <footer class="footer"><span>© <span id="year"></span> Gyamfi Learning Hub</span><span>Learn with purpose. Grow with confidence.</span><span class="api-status"><i id="api-dot"></i><span id="api-status-text">Checking services…</span></span></footer>
+      </div>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
