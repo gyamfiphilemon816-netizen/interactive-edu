@@ -16,6 +16,22 @@
     {
       "src": "api/health.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "api/courses.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/curriculum.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/careers.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/videos.js",
+      "use": "@vercel/node"
     }
   ],
   "headers": [
