@@ -94,26 +94,52 @@
   }
   const viewMessages = {
     dashboard: ["Dashboard", "You're back at your learning dashboard."],
-    courses: ["My learning", "Choose a subject to start exploring. Official syllabus mapping is being built."],
-    subjects: ["Subjects", "Subject libraries will be organized by your selected country and education level."],
-    videos: ["Video library", "The video library will keep educational videos separate from written lessons."],
-    "ai-tutor": ["AI study buddy", "AI tutoring will be connected to a secure server-side provider when configured."],
-    careers: ["Career pathways", "Explore a direction that interests you. Career guidance will not change when you switch curriculum country."],
-    streaks: ["My streaks", "Your activity below is saved locally on this device."]
+    courses: ["My learning", "Explore available learning subjects."],
+    subjects: ["Subjects", "Choose your curriculum and education level."],
+    videos: ["Video library", "Educational videos are listed separately from written lessons."],
+    "ai-tutor": ["AI study buddy", "Ask a question; AI replies require a configured provider."],
+    careers: ["Career pathways", "Career guidance stays independent of your selected curriculum country."],
+    streaks: ["My streaks", "Your activity is saved locally on this device."]
   };
+  const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+  async function renderFeature(view) {
+    const panel = $("#feature-view");
+    const icon = {"courses":"fa-book-open","subjects":"fa-flask","videos":"fa-circle-play","ai-tutor":"fa-robot","careers":"fa-compass","streaks":"fa-fire"}[view] || "fa-book";
+    panel.innerHTML = '<div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Loading…</div>';
+    if (view === "ai-tutor") {
+      panel.innerHTML = '<div class="feature-header"><h1><i class="fa-solid fa-robot"></i> AI study buddy</h1><p>Ask a study question in your own words. The AI provider is not configured yet, so this page will not pretend to generate AI answers.</p></div><div class="feature-card"><label for="tutor-question"><strong>Your question</strong></label><form class="tutor-form" id="tutor-form"><input id="tutor-question" required maxlength="1000" placeholder="e.g. Explain oxidation and reduction simply"><button class="feature-action" type="submit"><i class="fa-solid fa-paper-plane"></i> Ask tutor</button></form><div id="tutor-response" class="feature-response hidden"></div><p class="feature-meta">Next backend step: securely configure an AI provider key on Vercel, never in browser JavaScript.</p></div>';
+      $("#tutor-form").addEventListener("submit", e => { e.preventDefault(); const response = $("#tutor-response"); response.classList.remove("hidden"); response.textContent = "AI tutor is not connected yet. Your question was not sent anywhere. Once a server-side AI provider is configured, this form can return tutor explanations."; });
+      return;
+    }
+    let endpoint = ({courses:"/api/courses",subjects:"/api/curriculum?country="+encodeURIComponent($("#country-select").value),videos:"/api/videos",careers:"/api/careers"})[view];
+    if (view === "streaks") {
+      panel.innerHTML = '<div class="feature-header"><h1><i class="fa-solid '+icon+'"></i> My streaks</h1><p>Your study activity on this device.</p></div><div class="feature-grid"><article class="feature-card"><div class="feature-icon"><i class="fa-solid fa-clock"></i></div><h3>'+$("#study-minutes").textContent+' study minutes</h3><p>Total minutes logged on this device.</p></article><article class="feature-card"><div class="feature-icon"><i class="fa-solid fa-fire"></i></div><h3>'+$("#streak-count").textContent+' day streak</h3><p>Log a study session from the dashboard to track your effort.</p><button class="feature-action" id="log-session-feature">Log 15-minute session</button></article></div>';
+      $("#log-session-feature").addEventListener("click", recordStudySession);
+      return;
+    }
+    try {
+      const response = await fetch(endpoint, {headers:{Accept:"application/json"}});
+      if (!response.ok) throw new Error("Request failed");
+      const result = await response.json();
+      const items = Array.isArray(result) ? result : (result.items || []);
+      const title = viewMessages[view][0];
+      panel.innerHTML = '<div class="feature-header"><h1><i class="fa-solid '+icon+'"></i> '+escapeHtml(title)+'</h1><p>'+escapeHtml(view === "subjects" ? "Selected curriculum: "+$("#country-select").value+". Career pathways are not affected by this setting." : viewMessages[view][1])+'</p></div>' +
+        (items.length ? '<div class="feature-grid">'+items.map(item => '<article class="feature-card"><div class="feature-icon"><i class="fa-solid '+escapeHtml(item.icon || icon)+'"></i></div><div class="feature-meta">'+escapeHtml(item.level || item.category || item.status || "")+'</div><h3>'+escapeHtml(item.title || item.name)+'</h3><p>'+escapeHtml(item.description || item.summary || "")+'</p>'+(item.url ? '<a class="feature-action" href="'+escapeHtml(item.url)+'" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open resource</a>' : '')+'</article>').join("")+'</div>' : '<div class="feature-empty">No published items are available yet. Verified syllabus content will be added only after its source is reviewed.</div>');
+    } catch {
+      panel.innerHTML = '<div class="feature-header"><h1><i class="fa-solid '+icon+'"></i> '+escapeHtml(viewMessages[view][0])+'</h1></div><div class="feature-empty">The backend could not be reached. Check your connection and try again.</div><button class="feature-action" id="retry-feature"><i class="fa-solid fa-rotate"></i> Try again</button>';
+      $("#retry-feature").addEventListener("click", () => renderFeature(view));
+    }
+  }
   function navigate(view) {
     const info = viewMessages[view] || viewMessages.dashboard;
     $("#breadcrumb-current").textContent = info[0];
     $$(".nav-link").forEach(link => link.classList.toggle("active", link.dataset.view === view));
     $("#sidebar").classList.remove("open");
-    if (view !== "dashboard") showToast(info[1]);
-    if (view === "courses" || view === "subjects") $("#courses-heading").textContent = view === "subjects" ? "Explore subjects" : "Explore your learning";
-    if (view === "videos" || view === "ai-tutor" || view === "careers" || view === "streaks") {
-      const target = view === "careers" ? $(".career-card") : view === "streaks" ? $(".streak-card") : view === "videos" ? $(".course-grid") : $(".content-grid");
-      target?.scrollIntoView({ behavior: "smooth", block: "center" });
-    } else {
-      $("#dashboard").scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    const dashboard = view === "dashboard";
+    $("#dashboard-content").classList.toggle("hidden", !dashboard);
+    $("#feature-view").classList.toggle("hidden", dashboard);
+    if (dashboard) $("#dashboard").scrollIntoView({behavior:"smooth",block:"start"});
+    else { renderFeature(view); $("#feature-view").scrollIntoView({behavior:"smooth",block:"start"}); }
   }
   function recordStudySession() {
     const key = todayKey();
@@ -130,22 +156,13 @@
     event.preventDefault();
     navigate(view);
   }));
-  $$(".course-open").forEach(button => button.addEventListener("click", () => {
-    const course = button.dataset.course;
-    if (!state.completedLessons.includes(course)) {
-      state.completedLessons.push(course);
-      saveState();
-      renderActivity();
-    }
-    showToast(course + " selected. Verified lessons will be added as curriculum content is reviewed.");
-  }));
+  $(".course-open").forEach(button => button.addEventListener("click", () => { navigate("courses"); }));
   $("#country-select").value = state.selectedCountry || "Ghana";
   $("#country-select").addEventListener("change", event => {
     state.selectedCountry = event.target.value;
     saveState();
     showToast(event.target.value + " curriculum selected. Career pathways remain country-independent.");
-    // Never imply a curriculum has been verified when its official mapping is not yet available.
-    if (event.target.value !== "Ghana") showToast(event.target.value + " selected. Verified curriculum content for this country is not yet available.");
+    if (!$("#feature-view").classList.contains("hidden") && $("#breadcrumb-current").textContent === "Subjects") renderFeature("subjects");
   });
   renderDate();
   renderActivity();
