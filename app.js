@@ -156,7 +156,7 @@
     event.preventDefault();
     navigate(view);
   }));
-  $(".course-open").forEach(button => button.addEventListener("click", () => { navigate("courses"); }));
+  $$(".course-open").forEach(button => button.addEventListener("click", () => { navigate("courses"); }));
   $("#country-select").value = state.selectedCountry || "Ghana";
   $("#country-select").addEventListener("change", event => {
     state.selectedCountry = event.target.value;
