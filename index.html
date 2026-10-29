@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#f7f8fc">
   <meta name="description" content="Gyamfi Learning Hub helps learners explore curricula, study lessons, build learning streaks and discover career pathways.">
   <title>Gyamfi Learning Hub — Learn with purpose</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" referrerpolicy="no-referrer">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -21,16 +22,16 @@
       </a>
       <div class="side-label">LEARN</div>
       <nav class="side-nav" aria-label="Main navigation">
-        <a class="nav-link active" href="#dashboard" data-view="dashboard"><span>▦</span> Dashboard</a>
-        <a class="nav-link" href="#courses" data-view="courses"><span>▤</span> My learning</a>
-        <a class="nav-link" href="#subjects" data-view="subjects"><span>◈</span> Subjects</a>
-        <a class="nav-link" href="#videos" data-view="videos"><span>▷</span> Video library <span class="nav-pill">NEW</span></a>
+        <a class="nav-link active" href="#dashboard" data-view="dashboard"><i class="fa-solid fa-table-columns" aria-hidden="true"></i> Dashboard</a>
+        <a class="nav-link" href="#courses" data-view="courses"><i class="fa-solid fa-book-open" aria-hidden="true"></i> My learning</a>
+        <a class="nav-link" href="#subjects" data-view="subjects"><i class="fa-solid fa-flask" aria-hidden="true"></i> Subjects</a>
+        <a class="nav-link" href="#videos" data-view="videos"><i class="fa-brands fa-youtube" aria-hidden="true"></i> Video library <span class="nav-pill">NEW</span></a>
       </nav>
       <div class="side-label side-label-spaced">GROW</div>
       <nav class="side-nav" aria-label="Growth navigation">
-        <a class="nav-link" href="#ai-tutor" data-view="ai-tutor"><span>✳</span> AI study buddy</a>
-        <a class="nav-link" href="#careers" data-view="careers"><span>⌁</span> Career pathways</a>
-        <a class="nav-link" href="#streaks" data-view="streaks"><span>♨</span> My streaks</a>
+        <a class="nav-link" href="#ai-tutor" data-view="ai-tutor"><i class="fa-solid fa-robot" aria-hidden="true"></i> AI study buddy</a>
+        <a class="nav-link" href="#careers" data-view="careers"><i class="fa-solid fa-compass" aria-hidden="true"></i> Career pathways</a>
+        <a class="nav-link" href="#streaks" data-view="streaks"><i class="fa-solid fa-fire" aria-hidden="true"></i> My streaks</a>
       </nav>
       <div class="sidebar-bottom">
         <div class="help-card"><span class="help-icon">✦</span><strong>Keep growing.</strong><p>Small steps every day lead to big results.</p><a href="#courses" data-view="courses">Continue learning ↗</a></div>
@@ -40,16 +41,17 @@
 
     <main class="main-area" id="dashboard">
       <header class="topbar">
-        <button class="icon-button mobile-menu" id="menu-toggle" aria-label="Open menu">☰</button>
+        <button class="icon-button mobile-menu" id="menu-toggle" aria-label="Open menu"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
         <div class="breadcrumb">Learning space <span>/</span> <strong id="breadcrumb-current">Dashboard</strong></div>
         <div class="top-actions">
           <label class="country-select"><span>🌍</span><select id="country-select" aria-label="Choose curriculum country"><option value="Ghana">Ghana curriculum</option><option value="Nigeria">Nigeria curriculum</option><option value="United Kingdom">United Kingdom curriculum</option><option value="United States">United States curriculum</option><option value="South Africa">South Africa curriculum</option></select></label>
-          <button class="icon-button notification-button" aria-label="Notifications" title="Notifications">♧<i></i></button>
+          <button class="icon-button notification-button" aria-label="Notifications" title="Notifications"><i class="fa-regular fa-bell" aria-hidden="true"></i><b></b></button>
           <div class="avatar top-avatar">GL</div>
         </div>
       </header>
 
-      <div class="page-content">
+      <section class="feature-view hidden" id="feature-view" aria-live="polite"></section>
+      <div class="page-content" id="dashboard-content">
         <section class="welcome-row">
           <div><p class="eyebrow" id="today-label">YOUR LEARNING SPACE</p><h1 id="welcome-title">Keep that curiosity going <span>✦</span></h1><p class="muted" id="welcome-subtitle">A little progress today makes a big difference tomorrow.</p></div>
           <div class="date-chip"><span>▦</span><span id="date-label">Your learning journey</span></div>
